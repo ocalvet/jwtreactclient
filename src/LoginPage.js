@@ -8,19 +8,27 @@ const auth = new Authenticator(token);
 class LoginPage extends React.Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    error: ""
   };
 
-  onLogin = e => {
+  onLogin = async e => {
     e.preventDefault();
-    console.log("Logging in...", this.state);
+    try {
+      await auth.login(this.state.username, this.state.password);
+      this.props.history.push("/secret");
+    } catch (e) {
+      this.setState({ error: e.toString() });
+    }
   };
 
   render() {
-    const { history } = this.props;
     return (
       <div>
         <h1>Login Page</h1>
+        {this.state.error && this.state.error.length > 3 ? (
+          <p>{this.state.error}</p>
+        ) : null}
         <form noValidate>
           <div>
             <label>Username</label>

@@ -5,7 +5,7 @@ class Authenticator {
 
   async login(username, password) {
     try {
-      const response = await fetch(process.env.REACT_APP_AUTH_URL, {
+      const response = await fetch(`${process.env.REACT_APP_AUTH_URL}/login`, {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json"
